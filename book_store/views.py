@@ -34,7 +34,7 @@ def publisher_book(request, publisher_id):
 
 
 def author(request):
-    authors_count = Book.objects.prefetch_related('authors').count()
+    authors_count = Author.objects.prefetch_related('authors').count()
     young_author = Author.objects.all().aggregate(Min('age'))
 
     return render(
