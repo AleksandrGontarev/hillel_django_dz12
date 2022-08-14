@@ -1,7 +1,14 @@
 from book_store.models import Author, Book, Publisher, Store
 
 from django.db.models import Avg, Count, Min
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView, TemplateView, UpdateView
+from django.views.generic.edit import CreateView
+from django.contrib.messages.views import SuccessMessageMixin
+
+from django.urls import reverse_lazy
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def index(request):
@@ -138,3 +145,51 @@ def store_books(request, store_id):
             'stores': stores,
         }
     )
+
+
+class Index(TemplateView):
+    template_name = 'book_store/example_index.html'
+
+
+class AuthorDetailView(DetailView):
+    model = Author
+
+
+
+class AuthorListView(ListView):
+    model = Author
+
+
+class AuthorCreateView( CreateView):
+    model = Author
+    fields = ['name', 'age']
+    success_url = reverse_lazy("book_store:author-list")
+    # success_message = 'News author added successfully'
+    # template_name = "book_store/author_form.html"
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+
+class AuthorUpdate(UpdateView):
+    model = Author
+    fields = ['name', 'age']
+    template_name = "book_store/author_update.html"
+    success_url = reverse_lazy("book_store:author-list")
+
+
+
+def person_home(request):
+    return render(request, "book_store/person_home.html")
+
+
+
+
+
+
+
+
+
+

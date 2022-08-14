@@ -1,0 +1,13 @@
+<h1>Authors</h1>
+<ul>
+{% for author in object_list %}
+<li>
+    <a href="{% url 'book_store:author-detail' author.pk%}"> <p>{{ author.name }}</p></a>
+</li>
+
+{% endfor %}
+<h5>
+    <a href="{% url 'book_store:index'%}"> Home </a>
+</h5>
+
+</ul>

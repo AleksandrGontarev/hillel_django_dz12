@@ -9,3 +9,6 @@ flake8-import-order==0.18.1
 flake8-print==5.0.0
 Faker==13.15.1
 django-debug-toolbar==3.5.0
+amqp==5.1.1
+celery==5.2.7
+redis==4.3.4

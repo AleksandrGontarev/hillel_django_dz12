@@ -1,12 +1,19 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Author(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField()
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self):
-        return self.name
+        return f"{self.name}"
+
+    def get_absolute_url(self):
+        return reverse('book_store:author-list', args=[str(self.pk)])
 
 
 class Publisher(models.Model):
@@ -35,3 +42,5 @@ class Store(models.Model):
 
     def __str__(self):
         return self.name
+
+
